@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170516190022) do
+ActiveRecord::Schema.define(version: 20170516192155) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,6 +19,19 @@ ActiveRecord::Schema.define(version: 20170516190022) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "generation", default: 1
+    t.integer "max_size", default: 20
+  end
+
+  create_table "generation_stats", force: :cascade do |t|
+    t.bigint "deme_id"
+    t.integer "generation"
+    t.string "best_gene"
+    t.decimal "min"
+    t.decimal "max"
+    t.decimal "avg"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["deme_id"], name: "index_generation_stats_on_deme_id"
   end
 
   create_table "programs", force: :cascade do |t|

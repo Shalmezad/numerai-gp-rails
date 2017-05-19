@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  deme: 
+  generation: 1
+  best_gene: MyString
+  min: 9.99
+  max: 9.99
+  avg: 9.99
+
+two:
+  deme: 
+  generation: 1
+  best_gene: MyString
+  min: 9.99
+  max: 9.99
+  avg: 9.99
