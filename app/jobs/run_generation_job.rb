@@ -7,6 +7,8 @@ class RunGenerationJob < ApplicationJob
     # a) split into a bunch of measure fitness jobs
     # b) regroup into a build next generation job
 
+    deme = Deme.find(deme_id)
+
     # So ideally I want something like
     batch = BatChi.batch
     # Build the next generation after we're done measuring:
@@ -15,7 +17,7 @@ class RunGenerationJob < ApplicationJob
     num_inputs = 5
     training_ids = TrainingDatum.order("RANDOM()").limit(num_inputs).pluck(:id)
     # Create a job for each of the programs
-    program_ids = Deme.find(deme_id).programs.pluck(:id)
+    program_ids = deme.programs.where(:generation => deme.generation).pluck(:id)
     program_ids.each do |program_id|
       batch.add(MeasureFitnessJob, program_id, training_ids)
     end
