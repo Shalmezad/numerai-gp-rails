@@ -26,9 +26,12 @@ gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 3.0'
+# Also need it for resque:
+gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
+# Use resque for ActiveJob
+gem 'resque', '1.27.4'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

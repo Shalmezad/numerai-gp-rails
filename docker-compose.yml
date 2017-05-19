@@ -1,9 +1,20 @@
 version: '2'
 services:
+  redis:
+    image: redis
   db:
     image: postgres
+  worker:
+    image: numerai_web
+    command: rake resque:work QUEUE=*
+    volumes:
+      - .:/numerai
+    depends_on:
+      - db
+      - redis
   web:
     build: .
+    image: numerai_web
     command: bundle exec rails s -p 3000 -b '0.0.0.0'
     volumes:
       - .:/numerai
@@ -11,3 +22,4 @@ services:
       - "3000:3000"
     depends_on:
       - db
+      - redis
