@@ -25,9 +25,9 @@ class Program < ApplicationRecord
 
   # Returns a [weighted] random token
   def random_token
-    chance_symbol = 100 # +, -, *, /, etc
-    chance_input = 90 # i40, i21, etc
-    chance_number = 10
+    chance_symbol = 50 # +, -, *, /, etc
+    chance_input = 50 # i40, i21, etc
+    chance_number = 20
 
     total = chance_symbol + chance_input + chance_number
     stick = rand() * total
@@ -36,7 +36,7 @@ class Program < ApplicationRecord
     if stick < chance_symbol
       token = ["+", "-", "*"].sample
     elsif stick < chance_symbol + chance_input
-      token = "i" + (rand() * 200).to_i.to_s
+      token = "i" + (rand() * TrainingDatum::NUM_FEATURES).to_i.to_s
     else
       token = (rand() * 2 - 1).to_s
     end

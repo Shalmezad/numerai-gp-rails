@@ -60,7 +60,7 @@ class BuildNextGenerationJob < ApplicationJob
     # X chance of picking that one. If not, go to the next
     # So on down the list
     ids.each do |id|
-      if rand < 0.7
+      if rand < 0.2
         return id
       end
     end
