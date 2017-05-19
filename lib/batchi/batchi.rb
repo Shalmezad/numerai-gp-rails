@@ -24,7 +24,7 @@ module BatChi
 
     def callback(clazz, *args)
       @batch_callback = {}
-      @batch_callback[:clazz] = clazz
+      @batch_callback[:clazz] = clazz.to_s
       @batch_callback[:args] = args
     end
 
@@ -40,6 +40,16 @@ module BatChi
       # 1) Set up our job counter:
       Batch.redis.set(Batch.batch_count_key(@batch_id), @batch_jobs.count)
       # 2) Set up and start the jobs:
+      @batch_jobs.each do |batch_job|
+        args = batch_job[:args]
+        # Add our callback
+        args.unshift @batch_callback
+        # Add our batch id
+        args.unshift @batch_id
+        # Add the batched job key:
+        args.unshift BatChi::IS_A_BATCHED_JOB_KEY
+        batch_job[:clazz].perform_later(*args)
+      end
     end
   end
 
