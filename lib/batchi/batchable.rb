@@ -20,7 +20,7 @@ module BatChi
                 callback = job.batchi_batch_callback
                 clazz = callback[:clazz].constantize
                 args = callback[:args]
-                clazz.perform_later(args)
+                clazz.perform_later(*args)
               end
             else
               Rails.logger.warn "No batch..."

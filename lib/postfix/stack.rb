@@ -22,4 +22,8 @@ class Stack
     @stack.last
   end
 
+  def size
+    @stack.size
+  end
+
 end

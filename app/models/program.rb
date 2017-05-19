@@ -34,7 +34,7 @@ class Program < ApplicationRecord
 
     token = nil
     if stick < chance_symbol
-      token = ["+", "-", "*", "/"].sample
+      token = ["+", "-", "*"].sample
     elsif stick < chance_symbol + chance_input
       token = "i" + (rand() * 200).to_i.to_s
     else

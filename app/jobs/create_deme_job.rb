@@ -1,12 +1,12 @@
 class CreateDemeJob < ApplicationJob
   queue_as :default
 
-  def perform(*args)
+  def perform(population_size = 10)
     Rails.logger.warn("CreateDemeJob")
     # Do something later
     d = Deme.new
     d.save!
-    5.times do 
+    population_size.times do 
       p = d.programs.build
       p.randomize
       p.save
