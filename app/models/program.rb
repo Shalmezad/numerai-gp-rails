@@ -54,7 +54,7 @@ class Program < ApplicationRecord
     total = chance_mutate + chance_add + chance_delete + chance_swap
     stick = rand() * total
 
-    tokens = self.gene.split(" ")
+    tokens = self.gene.split
     i = (rand() * tokens.size).to_i
     if stick < chance_mutate
       # Mutate a token:

@@ -53,7 +53,7 @@ class Postfix
   end
 
   def to_a
-    @expr.split(" ")
+    @expr.split
   end
 
   def numeric?(string)
