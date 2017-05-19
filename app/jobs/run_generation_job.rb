@@ -9,9 +9,15 @@ class RunGenerationJob < ApplicationJob
 
     # So ideally I want something like
     batch = BatChi.batch
+    # Build the next generation after we're done measuring:
     batch.callback(BuildNextGenerationJob, deme_id)
-    5.times do |i|
-      batch.add(MeasureFitnessJob, i)
+    # Select the training data to use:
+    num_inputs = 5
+    training_ids = TrainingDatum.order("RANDOM()").limit(num_inputs).pluck(:id)
+    # Create a job for each of the programs
+    program_ids = Deme.find(deme_id).programs.pluck(:id)
+    program_ids.each do |program_id|
+      batch.add(MeasureFitnessJob, program_id, training_ids)
     end
     batch.start
   end

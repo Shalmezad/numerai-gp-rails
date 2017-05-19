@@ -36,7 +36,7 @@ module BatChi
           # Do we have the # of args?
           if args.size < 2
             Rails.logger.warn "Batchi batchable args too small"
-            super(args)
+            super(*args)
           else  
             # Ok, but are they OUR args?
             if args.first == BatChi::IS_A_BATCHED_JOB_KEY
@@ -45,10 +45,10 @@ module BatChi
               key = args.shift
               @batchi_batch_id = args.shift
               @batchi_batch_callback = args.shift
-              super(args)
+              super(*args)
             else
               Rails.logger.warn "Batchi batchable not key"
-              super(args)
+              super(*args)
             end
           end
         end
