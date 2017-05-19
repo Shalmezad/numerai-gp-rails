@@ -1,10 +1,15 @@
+require "#{Rails.root}/lib/postfix/postfix"
+
 class Program < ApplicationRecord
   belongs_to :deme
 
   # Given set of inputs, give output
   def output(inputs)
     # TODO: Code me!
-    return 0.5
+    pf = Postfix.new(self.gene)
+    return pf.evaluate(inputs)
+  rescue => ex
+    return nil
   end
 
   # Replaces gene with a completely random generated gene

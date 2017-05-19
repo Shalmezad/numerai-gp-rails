@@ -10,19 +10,30 @@ class MeasureFitnessJob < ApplicationJob
     #actual_outputs = []
     #expected_outputs = []
     logLosses = []
+    dead = false
     training_datum_ids.each do |training_datum_id|
       Rails.logger.warn "  #{program_id} < #{training_datum_id}"
       td = TrainingDatum.find(training_datum_id)
       expected_output = td.expected_output
       actual_output = p.output(td.inputs)
+      if actual_output.nil?
+        # Program crashed, therefor is dead:
+        dead = true
+        break
+      end
       loss = logLoss(expected_output, actual_output)
       logLosses << loss
     end
-    # Average the log losses
-    avg = logLosses.inject(:+)/logLosses.size
-    p.log_loss = avg
+
+    if !dead
+      # Average the log losses
+      avg = logLosses.inject(:+)/logLosses.size
+      p.log_loss = avg
+    else
+      p.log_loss = nil
+    end
     p.save
-    Rails.logger.warn "  #{program_id} loss: #{avg}"
+    Rails.logger.warn "  #{program_id} loss: #{avg.nil? ? "DEAD" : avg}"
   end
 
   def logLoss(act, pred, eps=1e-15)
