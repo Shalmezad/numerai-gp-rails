@@ -7,6 +7,8 @@ services:
   worker:
     image: numerai_web
     command: rake resque:work QUEUE=*
+    environment:
+      - RAILS_LOG_TO_STDOUT=1
     volumes:
       - .:/numerai
     depends_on:
@@ -16,6 +18,8 @@ services:
     build: .
     image: numerai_web
     command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    environment:
+      - RAILS_LOG_TO_STDOUT=1
     volumes:
       - .:/numerai
     ports:
