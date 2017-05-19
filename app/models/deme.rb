@@ -13,7 +13,7 @@ class Deme < ApplicationRecord
     best_gene = self.programs.where(:generation => self.generation).order("log_loss asc").limit(1).pluck(:gene)
     min = log_losses.min
     max = log_losses.max
-    avg = log_losses.inject(:+)/log_losses.size
+    avg = log_losses.inject(:+)/log_losses.size rescue 0
     gs = GenerationStat.create({
       :deme_id => self.id,
       :generation => self.generation,

@@ -33,6 +33,10 @@ gem 'redis', '~> 3.0'
 # Use resque for ActiveJob
 gem 'resque', '1.27.4'
 
+# Only for the import task
+# Should save doing a crap ton of imports:
+gem "activerecord-import", ">= 0.2.0"
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

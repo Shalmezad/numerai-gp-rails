@@ -26,7 +26,7 @@ class Program < ApplicationRecord
   # Returns a [weighted] random token
   def random_token
     chance_symbol = 100 # +, -, *, /, etc
-    chance_input = 45 # i40, i21, etc
+    chance_input = 90 # i40, i21, etc
     chance_number = 10
 
     total = chance_symbol + chance_input + chance_number

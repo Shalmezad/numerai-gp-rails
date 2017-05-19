@@ -14,8 +14,11 @@ class BuildNextGenerationJob < ApplicationJob
       a_id = pick_id(ids)
       b_id = pick_id(ids)
       # Grab their genes:
-      gene_a = Program.where(:id => a_id).pluck(:gene)[0].split
-      gene_b = Program.where(:id => b_id).pluck(:gene)[0].split
+      #gene_a = Program.where(:id => a_id).pluck(:gene)[0].split
+      #gene_b = Program.where(:id => b_id).pluck(:gene)[0].split
+      gene_a = Program.find(a_id).gene.split
+      gene_b = Program.find(b_id).gene.split
+
       # Pick a spot to split
       index_a = (gene_a.size * rand()).to_i
       index_b = (gene_b.size * rand()).to_i
@@ -28,20 +31,27 @@ class BuildNextGenerationJob < ApplicationJob
       new_expr_b = gene_b[0...index_b] + gene_a[index_a..-1]
       # BUT, we're only after one gene
       # So need to pick one...
-      new_gene = [new_expr_a, new_expr_b].sample
+      new_gene = [new_expr_a, new_expr_b].sample.join(" ")
       # And build a new program:
       p = deme.programs.build
       p.gene = new_gene
       p.generation = deme.generation + 1
       p.save
+      # See if we should mutate
+      if rand() < 0.1
+        p.mutate
+        p.save
+      end
     end
     # Destroy the old programs:
     Program.where(:id => ids).destroy_all
     # Bump up our generation:
     deme.generation += 1
     deme.save
-    # And run!
-    RunGenerationJob.perform_later(deme.id)
+    # And run (if we haven't been told to stop)
+    if !deme.stop
+      RunGenerationJob.perform_later(deme.id)
+    end
   end
 
   def pick_id(ids)

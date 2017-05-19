@@ -1,0 +1,34 @@
+
+<table>
+  <tr>
+    <th>Deme ID</th>
+    <th>Generation</th>
+    <th>Best Gene</th>
+    <th>Min</th>
+    <th>Max</th>
+    <th>Avg</th>
+  </tr>
+  <% @generationStats.each do |gs| %>
+    <tr>
+      <td>
+        <%= gs.deme_id %>
+      </td>
+      <td>
+        <%= gs.generation %>
+      </td>
+      <td>
+        <%= gs.best_gene %>
+      </td>
+      <td>
+        <%= '%.4f' % (gs.min.to_f rescue 0) %>
+      </td>
+      <td>
+        <%= '%.4f' % (gs.max.to_f rescue 0) %>
+      </td>
+      <td>
+        <%= '%.4f' % (gs.avg.to_f rescue 0) %>
+      </td>
+    </tr>
+
+  <% end %>
+</table>

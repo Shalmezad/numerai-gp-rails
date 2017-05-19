@@ -24,6 +24,7 @@ namespace :numerai do
     #ext/numerai/numerai_training_data.csv
     file = "#{Rails.root}/ext/numerai/numerai_training_data.csv"
     keys = []
+    training_data_values = []
     File.foreach(file).with_index do |line, line_num|
       if line_num == 0
         # First line, this is our keys:
@@ -33,12 +34,15 @@ namespace :numerai do
       else
         # Regular data line.
         data = line.chomp.split(",")
-        h = {}
-        keys.zip(data){|a,b|h[a.to_sym] = b}
-        puts "Creating with: #{h.to_json}"
-        TrainingDatum.create(h)
+        #h = {}
+        #keys.zip(data){|a,b|h[a.to_sym] = b}
+        #puts "Creating with: #{h.to_json}"
+        #training_data << TrainingDatum.new(h)
+        training_data_values << data
       end # if line_num == 0
     end # File.foreach
+    #TraningDatum.import training_data
+    TrainingDatum.import keys, training_data_values, validate: false, batch_size: 500
   end # task :load
 
 end
