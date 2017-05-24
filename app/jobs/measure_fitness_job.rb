@@ -11,9 +11,9 @@ class MeasureFitnessJob < ApplicationJob
     #expected_outputs = []
     logLosses = []
     dead = false
-    training_datum_ids.each do |training_datum_id|
-      Rails.logger.warn "  #{program_id} < #{training_datum_id}"
-      td = TrainingDatum.find(training_datum_id)
+    TrainingDatum.find(training_datum_ids).each do |td|
+      #Rails.logger.warn "  #{program_id} < #{training_datum_id}"
+      #td = TrainingDatum.find(training_datum_id)
       expected_output = td.expected_output
       actual_output = p.output(td.inputs)
       if actual_output.nil?
@@ -21,6 +21,8 @@ class MeasureFitnessJob < ApplicationJob
         dead = true
         break
       end
+      # Going to normalize the actual output for easy of use:
+      actual_output = (Math.tanh(actual_output)+1)/2
       loss = logLoss(expected_output, actual_output)
       logLosses << loss
     end

@@ -25,8 +25,8 @@ class Program < ApplicationRecord
 
   # Returns a [weighted] random token
   def random_token
-    chance_symbol = 50 # +, -, *, /, etc
-    chance_input = 50 # i40, i21, etc
+    chance_symbol = 80 # +, -, *, /, etc
+    chance_input = 40 # i40, i21, etc
     chance_number = 20
 
     total = chance_symbol + chance_input + chance_number
@@ -49,7 +49,7 @@ class Program < ApplicationRecord
     return if self.gene.nil?
     chance_mutate = 20
     chance_add = 50
-    chance_delete = 5
+    chance_delete = 25
     chance_swap = 25
     total = chance_mutate + chance_add + chance_delete + chance_swap
     stick = rand() * total
@@ -61,7 +61,11 @@ class Program < ApplicationRecord
       tokens[i] = random_token
     elsif stick < chance_mutate + chance_delete
       # Delete:
-      tokens.delete_at(i)
+      num_deletions = (rand() * [5,tokens.size].min).to_i
+      num_deletions.times do
+        i = (rand() * tokens.size).to_i
+        tokens.delete_at(i)
+      end
     elsif stick < chance_mutate + chance_delete + chance_add
       # Add:
       num_additions = (rand() * 5).to_i

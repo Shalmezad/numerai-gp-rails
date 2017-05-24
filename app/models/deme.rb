@@ -1,6 +1,15 @@
 class Deme < ApplicationRecord
   has_many :programs
 
+  def stop_run
+    self.update_attributes :stop => true
+  end
+
+  def start_run
+    self.update_attributes :stop => false
+    RunGenerationJob.perform_later(self.id)
+  end
+
   def create_generation_stats
     # Builds the stats for the current generation
     # Also sends them off to any interested parties.
