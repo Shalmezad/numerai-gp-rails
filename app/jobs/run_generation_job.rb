@@ -16,7 +16,7 @@ class RunGenerationJob < ApplicationJob
     batch.callback(AddResourceScoreJob, deme_id)
     # Select the training data to use:
     num_inputs = 10
-    training_ids = TrainingDatum.order("RANDOM()").limit(num_inputs).pluck(:id)
+    training_ids = TrainingDatum.where(:data_type => "train").order("RANDOM()").limit(num_inputs).pluck(:id)
     # Create a job for each of the programs
     program_ids = deme.programs.where(:generation => deme.generation).pluck(:id)
     program_ids.each do |program_id|
