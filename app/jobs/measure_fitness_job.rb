@@ -11,21 +11,26 @@ class MeasureFitnessJob < ApplicationJob
     #expected_outputs = []
     logLosses = []
     dead = false
-    TrainingDatum.find(training_datum_ids).each do |td|
-      #Rails.logger.warn "  #{program_id} < #{training_datum_id}"
-      #td = TrainingDatum.find(training_datum_id)
-      expected_output = td.expected_output
-      actual_output = p.output(td.inputs)
-      if actual_output.nil?
-        # Program crashed, therefor is dead:
-        dead = true
-        break
+    # We have a bunch of ids, group them into batches of N:
+    n = 5
+    training_datum_ids.each_slice(n).each do |id_subset|
+      TrainingDatum.find(id_subset).each do |td|
+        #Rails.logger.warn "  #{program_id} < #{training_datum_id}"
+        #td = TrainingDatum.find(training_datum_id)
+        expected_output = td.expected_output
+        actual_output = p.output(td.inputs)
+        if actual_output.nil?
+          # Program crashed, therefor is dead:
+          dead = true
+          break
+        end
+        # Going to normalize the actual output for easy of use:
+        actual_output = (Math.tanh(actual_output)+1)/2
+        loss = logLoss(expected_output, actual_output)
+        logLosses << loss
       end
-      # Going to normalize the actual output for easy of use:
-      actual_output = (Math.tanh(actual_output)+1)/2
-      loss = logLoss(expected_output, actual_output)
-      logLosses << loss
-    end
+      break if dead
+    end #training_datum_ids.each_slice(n).each
 
     if !dead
       # Average the log losses
