@@ -20,12 +20,15 @@ class AddResourceScoreJob < ApplicationJob
     # And add the rewards:
     Program.where(:deme_id => deme_id).each do |p|
       next if p.log_loss.nil?
+      p.resource_bonus = 0 
       TrainingDatum::NUM_FEATURES.times do |i|
         s = "i" + i.to_s
         if p.gene.include? s
-          p.log_loss = p.log_loss * (1-rewards[i])
+          p.resource_bonus += rewards[i]
         end
       end
+      # Apply resource bonus to logloss:
+      p.log_loss *= (1 - p.resource_bonus)
       p.save
     end
     
