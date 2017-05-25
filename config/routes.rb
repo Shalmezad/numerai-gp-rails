@@ -1,6 +1,7 @@
 require 'resque/server'
 Rails.application.routes.draw do
   resources :generation_stats
+  resources :dashboard
   resources :demes do
     resources :programs
   end

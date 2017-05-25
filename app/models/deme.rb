@@ -1,5 +1,6 @@
 class Deme < ApplicationRecord
   has_many :programs
+  has_many :generation_stats
 
   def stop_run
     self.update_attributes :stop => true
