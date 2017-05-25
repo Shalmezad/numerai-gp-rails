@@ -34,7 +34,7 @@ class Program < ApplicationRecord
 
     token = nil
     if stick < chance_symbol
-      token = ["+", "-", "*"].sample
+      token = ["+", "-", "*", "/", "log", "log10", "tanh"].sample
     elsif stick < chance_symbol + chance_input
       token = "i" + (rand() * TrainingDatum::NUM_FEATURES).to_i.to_s
     else

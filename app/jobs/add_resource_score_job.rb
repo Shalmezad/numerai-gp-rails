@@ -19,6 +19,7 @@ class AddResourceScoreJob < ApplicationJob
     rewards = feature_use_counts.map{|x|reduction_per_feature/x}
     # And add the rewards:
     Program.where(:deme_id => deme_id).each do |p|
+      next if p.log_loss.nil?
       TrainingDatum::NUM_FEATURES.times do |i|
         s = "i" + i.to_s
         if p.gene.include? s

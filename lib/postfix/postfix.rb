@@ -36,6 +36,23 @@ class Postfix
         rhs = stack.pop
         lhs = stack.pop
         stack.push(lhs - rhs)
+      elsif token == "/"
+        next if soft_fail and stack.size < 2
+        rhs = stack.pop
+        lhs = stack.pop
+        stack.push(lhs / rhs)
+      elsif token == "log"
+        next if soft_fail and stack.size < 1
+        rhs = stack.pop
+        stack.push(Math.log(rhs))
+      elsif token == "log10"
+        next if soft_fail and stack.size < 1
+        rhs = stack.pop
+        stack.push(Math.log10(rhs))
+      elsif token == "tanh"
+        next if soft_fail and stack.size < 1
+        rhs = stack.pop
+        stack.push(Math.tanh(rhs))
       else
         next if soft_fail
         raise "Unknown token: #{token}"
