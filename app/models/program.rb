@@ -5,7 +5,6 @@ class Program < ApplicationRecord
 
   # Given set of inputs, give output
   def output(inputs)
-    # TODO: Code me!
     pf = Postfix.new(self.gene)
     return pf.evaluate(inputs)
   rescue => ex

@@ -10,6 +10,7 @@ setup:
 	docker-compose run web rake numerai:fetch
 	# Load the data
 	docker-compose run web rake numerai:load
+	docker-compose run web rake numerai:load_tournament
 
 # Aliases for my use:
 cleanup:

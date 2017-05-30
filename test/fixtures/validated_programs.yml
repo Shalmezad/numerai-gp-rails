@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  gene: MyText
+  total_log_loss: 9.99
+  total_tested: 1
+  avg_log_loss: 9.99
+
+two:
+  gene: MyText
+  total_log_loss: 9.99
+  total_tested: 1
+  avg_log_loss: 9.99

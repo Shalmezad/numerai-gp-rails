@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170525141332) do
+ActiveRecord::Schema.define(version: 20170525144245) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,6 +72,15 @@ ActiveRecord::Schema.define(version: 20170525141332) do
     t.decimal "feature20"
     t.decimal "feature21"
     t.integer "target"
+  end
+
+  create_table "validated_programs", force: :cascade do |t|
+    t.text "gene"
+    t.decimal "total_log_loss"
+    t.integer "total_tested"
+    t.decimal "avg_log_loss"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
