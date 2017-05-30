@@ -12,6 +12,9 @@ setup:
 	docker-compose run web rake numerai:load
 	docker-compose run web rake numerai:load_tournament
 
+diagrams:
+	dot -Tpng -o doc/job_diagram.png doc/job_diagram.dot
+
 # Aliases for my use:
 cleanup:
 	#docker ps -a | grep Exit | cut -d ' ' -f 1 | xargs docker rm

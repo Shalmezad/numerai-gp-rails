@@ -1,0 +1,20 @@
+digraph {
+    label="Job Diagram"
+    start[shape="box", style=rounded];
+    if_stop[shape="diamond", style=""];
+
+
+    start -> create_deme_job
+    create_deme_job -> run_generation_job
+    run_generation_job -> measure_fitness_job_1
+    run_generation_job -> measure_fitness_job_2
+    run_generation_job -> measure_fitness_job_n
+
+    measure_fitness_job_1 -> add_resource_score_job
+    measure_fitness_job_2 -> add_resource_score_job
+    measure_fitness_job_n -> add_resource_score_job
+
+    add_resource_score_job -> build_next_generation_job
+    build_next_generation_job -> if_stop
+    if_stop -> run_generation_job[label="no"];
+}
