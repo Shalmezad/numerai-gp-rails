@@ -14,6 +14,16 @@ services:
     depends_on:
       - db
       - redis
+  worker_validation:
+    image: numerai_web
+    command: rake resque:work QUEUE=validation,*
+    environment:
+      - RAILS_LOG_TO_STDOUT=1
+    volumes:
+      - .:/numerai
+    depends_on:
+      - db
+      - redis
   web:
     build: .
     image: numerai_web

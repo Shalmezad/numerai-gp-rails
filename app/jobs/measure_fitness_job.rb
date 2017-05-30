@@ -12,7 +12,7 @@ class MeasureFitnessJob < ApplicationJob
     logLosses = []
     dead = false
     # We have a bunch of ids, group them into batches of N:
-    n = 5
+    n = 100
     training_datum_ids.each_slice(n).each do |id_subset|
       TrainingDatum.find(id_subset).each do |td|
         #Rails.logger.warn "  #{program_id} < #{training_datum_id}"

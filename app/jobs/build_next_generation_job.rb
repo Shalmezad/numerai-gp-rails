@@ -11,6 +11,13 @@ class BuildNextGenerationJob < ApplicationJob
     deme.create_generation_stats
     # Nice part is, the puts nil at the end, so "dead" programs are still in the running... ish
     ids = deme.programs.where(:generation => deme.generation).order("log_loss asc").pluck(:id)
+    # Clone the best one we have, and run validation job:
+    best_id = ids.first
+    best_program = Program.find(best_id).dup
+    best_program.save
+    RunValidationJob.perform_later(best_program.id)
+
+    # Do our selection
     weighted_selection = false
     if WEIGHTED_SELECTION
       perform_weighted_selection(deme, ids)
