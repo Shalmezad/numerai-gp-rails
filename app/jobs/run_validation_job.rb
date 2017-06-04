@@ -13,7 +13,7 @@ class RunValidationJob < ApplicationJob
     dead = false
     # We have a bunch of ids, group them into batches of N:
     training_datum_ids = TrainingDatum.where(:data_type => "validation").pluck(:id)
-    n = 100
+    n = 500
     training_datum_ids.each_slice(n).each do |id_subset|
       TrainingDatum.find(id_subset).each do |td|
         #Rails.logger.warn "  #{program_id} < #{training_datum_id}"

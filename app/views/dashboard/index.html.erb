@@ -15,7 +15,7 @@
       <td><%= deme.max_size %></td>
       <td><%= !deme.stop %></td>
       <td><%= deme.best_gene %></td>
-      <td><%= '%.4f' % (deme.best_log_loss.to_f rescue 0) %></td>
+      <td><%= '%.6f' % (deme.best_log_loss.to_f rescue 0) %></td>
     </tr>
   <% end %>
 </table>
