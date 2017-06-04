@@ -56,14 +56,7 @@ class BuildNextGenerationJob < ApplicationJob
       else
         # Just put them in the next generation
         programs.each do |p2|
-          p = deme.programs.build
-          p.gene = p2.gene
-          p.generation = deme.generation + 1
-          p.save
-          if rand() < MUTATION_CHANCE
-            p.mutate
-            p.save
-          end
+          add_gene_to_next_generation(deme, p2.gene)
         end
       end
     end
@@ -114,6 +107,18 @@ class BuildNextGenerationJob < ApplicationJob
     if rand() < MUTATION_CHANCE
       p.mutate
       p.save
+    end
+    # See if we need to crop:
+    if !deme.max_program_size.nil?
+      p.reload
+      tokens = p.gene.split
+      if tokens.size > deme.max_program_size
+        while tokens.size > deme.max_program_size
+          tokens.delete_at(rand(tokens.length))
+        end
+        p.gene = tokens.join(" ")
+        p.save
+      end
     end
   end
 

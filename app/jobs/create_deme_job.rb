@@ -8,6 +8,8 @@ class CreateDemeJob < ApplicationJob
     # Set our max size.
     # Eventually, may want this to fluctuate...
     d.max_size = population_size
+    # This should help constrain size...
+    d.max_program_size = 50
     d.save!
     population_size.times do 
       p = d.programs.build
