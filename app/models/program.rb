@@ -2,84 +2,50 @@ require "#{Rails.root}/lib/postfix/postfix"
 
 class Program < ApplicationRecord
   belongs_to :deme
+  belongs_to :programmable, :polymorphic => true, :inverse_of => :program, autosave: true
 
-  # Given set of inputs, give output
-  def output(inputs)
-    pf = Postfix.new(self.gene)
-    return pf.evaluate(inputs)
-  rescue => ex
-    return nil
+  #after_initialize :set_programmable
+  after_save :save_programmable
+
+  def initialize(params)
+    super(params)
+    set_programmable
   end
 
-  # Replaces gene with a completely random generated gene
+  def set_programmable
+    if self.deme
+      # TODO: See what deme preferences are:
+      self.programmable = PostfixProgram.new
+    end
+  end
+
+  def save_programmable
+    self.programmable.save
+  end
+
   def randomize
-    tokens = []
-    num_tokens = (rand() * 20).to_i
-    num_tokens.times do
-      token = random_token
-      tokens << token
-    end
-    self.gene = tokens.join(" ")
+    self.programmable.randomize
   end
 
-  # Returns a [weighted] random token
-  def random_token
-    chance_symbol = 80 # +, -, *, /, etc
-    chance_input = 40 # i40, i21, etc
-    chance_number = 20
-
-    total = chance_symbol + chance_input + chance_number
-    stick = rand() * total
-
-    token = nil
-    if stick < chance_symbol
-      token = ["+", "-", "*", "/", "log", "log10", "tanh"].sample
-    elsif stick < chance_symbol + chance_input
-      token = "i" + (rand() * TrainingDatum::NUM_FEATURES).to_i.to_s
-    else
-      token = (rand() * 2 - 1).to_s
-    end
-
-    return token
+  def output(inputs)
+    evaluate(inputs)
   end
 
-  # Mutates my gene
+  def evaluate(inputs)
+    self.programmable.evaluate(inputs)
+  end
+
+  def gene=(g)
+    self.programmable.gene = g
+  end
+
+  def gene
+    self.programmable.gene
+  end
+
   def mutate
-    return if self.gene.nil?
-    chance_mutate = 20
-    chance_add = 50
-    chance_delete = 25
-    chance_swap = 25
-    total = chance_mutate + chance_add + chance_delete + chance_swap
-    stick = rand() * total
-
-    tokens = self.gene.split
-    i = (rand() * tokens.size).to_i
-    if stick < chance_mutate
-      # Mutate a token:
-      tokens[i] = random_token
-    elsif stick < chance_mutate + chance_delete
-      # Delete:
-      num_deletions = (rand() * [5,tokens.size].min).to_i
-      num_deletions.times do
-        i = (rand() * tokens.size).to_i
-        tokens.delete_at(i)
-      end
-    elsif stick < chance_mutate + chance_delete + chance_add
-      # Add:
-      num_additions = (rand() * 5).to_i
-      num_additions.times do
-        tokens.insert(i, random_token)
-      end
-    else
-      # Swap:
-      i2 = (rand() * tokens.size).to_i
-      a = tokens[i]
-      tokens[i] = tokens[i2]
-      tokens[i2] = a
-    end
-
-    self.gene = tokens.join(" ")
+    self.programmable.mutate
+    self.programmable.save
   end
 
 end

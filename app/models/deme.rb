@@ -11,6 +11,11 @@ class Deme < ApplicationRecord
     RunGenerationJob.perform_later(self.id)
   end
 
+  def test_run
+    self.update_attributes :stop => true
+    RunGenerationJob.perform_later(self.id)
+  end
+
   def create_generation_stats
     # Builds the stats for the current generation
     # Also sends them off to any interested parties.
@@ -20,7 +25,8 @@ class Deme < ApplicationRecord
     log_losses = log_losses.select{|x|!x.nil?}
     # TODO: Add dead_count to generation stat
     dead_count = total - log_losses.size
-    best_gene = self.programs.where(:generation => self.generation).order("log_loss asc").limit(1).pluck(:gene)
+    #best_gene = self.programs.where(:generation => self.generation).order("log_loss asc").limit(1).pluck(:gene)
+    best_gene = self.programs.where(:generation => self.generation).order("log_loss asc").limit(1).first.gene
     min = log_losses.min
     max = log_losses.max
     avg = log_losses.inject(:+)/log_losses.size rescue 0
