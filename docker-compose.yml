@@ -4,6 +4,8 @@ services:
     image: redis
   db:
     image: postgres
+    volumes:
+      - ./db/data:/var/lib/postgresql/data
   worker:
     image: numerai_web
     command: rake resque:work QUEUE=*
