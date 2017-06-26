@@ -1,7 +1,11 @@
 class BuildNextGenerationJob < ApplicationJob
   queue_as :default
   MUTATION_CHANCE = 0.2
-  WEIGHTED_SELECTION = false
+
+  WEIGHTED_SELECTION = 1
+  TOURNAMENT_SELECTION = 2
+  ONE_PLUS_N_SELECTION = 3
+  SELECTION_METHOD = TOURNAMENT_SELECTION #ONE_PLUS_N_SELECTION
 
   def perform(deme_id)
     # Do something later
@@ -18,11 +22,12 @@ class BuildNextGenerationJob < ApplicationJob
     RunValidationJob.perform_later(best_program.id)
 
     # Do our selection
-    weighted_selection = false
-    if WEIGHTED_SELECTION
+    if SELECTION_METHOD == WEIGHTED_SELECTION
       perform_weighted_selection(deme, ids)
-    else
+    elsif SELECTION_METHOD == TOURNAMENT_SELECTION
       perform_tournament_selection(deme, ids)
+    elsif SELECTION_METHOD == ONE_PLUS_N_SELECTION 
+      perform_one_plus_n_selection(deme, ids)
     end
     # Destroy the old programs:
     Program.where(:id => ids).destroy_all
@@ -78,6 +83,15 @@ class BuildNextGenerationJob < ApplicationJob
       new_gene = cross(gene_a, gene_b).sample
       # And add it to our next generation:
       add_gene_to_next_generation(deme, new_gene)
+    end
+  end
+
+  def perform_one_plus_n_selection(deme, ids)
+    # ids are already sorted. 
+    # Our first one is the best:
+    best_gene = Program.find(ids.first).gene
+    ids.each do |i|
+      add_gene_to_next_generation(deme, best_gene)
     end
   end
 
