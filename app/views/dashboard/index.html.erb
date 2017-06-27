@@ -1,21 +1,28 @@
-<h3>Number to beat: 0.6931472</h3>
-<table>
-  <tr>
-    <th>Deme ID</th>
-    <th>Generation</th>
-    <th>Size</th>
-    <th>Running</th>
-    <th>Best Gene</th>
-    <th>Best LogLoss</th>
-  </tr>
-  <% @demes.each do |deme| %>
+<h3 class="ui block header">
+  Number to beat: 0.6931472
+</h3>
+<table class="ui sortable striped celled table">
+  <thead>
     <tr>
-      <td><%= link_to deme.id, deme_path(deme) %></td>
-      <td><%= deme.generation %></td>
-      <td><%= deme.max_size %></td>
-      <td><%= !deme.stop %></td>
-      <td><%= deme.best_gene %></td>
-      <td><%= '%.6f' % (deme.best_log_loss.to_f rescue 0) %></td>
+      <th>Deme ID</th>
+      <th>Generation</th>
+      <th>Size</th>
+      <th>Running</th>
+      <th>Best Gene</th>
+      <th>Best LogLoss</th>
     </tr>
-  <% end %>
+  </thead>
+  <tbody>
+    <% @demes.each do |deme| %>
+      <tr>
+        <td><%= link_to deme.id, deme_path(deme) %></td>
+        <td><%= deme.generation %></td>
+        <td><%= deme.max_size %></td>
+        <td><%= !deme.stop %></td>
+        <td><%= deme.best_gene %></td>
+        <% log_loss = (deme.best_log_loss.to_f rescue 0) %>
+        <td class="<%= log_loss != 0 && log_loss < 0.6931472 ? "positive" : "negative" %>"><%= '%.6f' % log_loss %></td>
+      </tr>
+    <% end %>
+  </tbody>
 </table>

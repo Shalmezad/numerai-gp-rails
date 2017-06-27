@@ -37,6 +37,11 @@ gem 'resque', '1.27.4'
 # Should save doing a crap ton of imports:
 gem "activerecord-import", ">= 0.2.0"
 
+# For a pretty ui:
+gem 'semantic-ui-sass'
+# Needed as part of that:
+gem 'jquery-rails'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
