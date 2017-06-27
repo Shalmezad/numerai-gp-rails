@@ -9,13 +9,14 @@
   </head>
 
   <body>
-    <div class="ui segment">
-      <%= yield %>
-      <div class="ui right attached rail">
-        <div class="ui segment">
-          <a href="/dashboard">Dashboard</a>
-        </div>
+    <div class="pusher">
+      <div class="ui segment">
+        <%= yield %>
+      </div>
+      <div class="ui black inverted verticial footer segment">
+        <a href="/dashboard">Dashboard</a>
       </div>
     </div>
+
   </body>
 </html>
