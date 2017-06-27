@@ -15,8 +15,8 @@
   <tbody>
     <% @demes.each do |deme| %>
       <tr>
-        <td><%= link_to deme.id, deme_path(deme) %></td>
-        <td><%= deme.generation %></td>
+        <td><%= link_to deme.id, deme_path(deme), :class => "ui button" %></td>
+        <td><%= link_to deme.generation, [deme, :programs], :class => "ui button" %></td>
         <td><%= deme.max_size %></td>
         <td><%= !deme.stop %></td>
         <td><%= deme.best_gene %></td>

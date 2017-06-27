@@ -9,6 +9,13 @@
   </head>
 
   <body>
-    <%= yield %>
+    <div class="ui segment">
+      <%= yield %>
+      <div class="ui right attached rail">
+        <div class="ui segment">
+          <a href="/dashboard">Dashboard</a>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
