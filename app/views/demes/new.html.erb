@@ -1,0 +1,9 @@
+<%= form_for :deme, url: demes_path do |f| %>
+  <p>
+    <%= f.label :max_program_size %>
+    <%= f.text_area :max_program_size %>
+  </p>
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>
