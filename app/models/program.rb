@@ -13,9 +13,9 @@ class Program < ApplicationRecord
   end
 
   def set_programmable
-    if self.deme
-      # TODO: See what deme preferences are:
-      self.programmable = PostfixProgram.new
+    if self.deme && self.deme.program_type
+      clazz = self.deme.program_type.constantize
+      self.programmable = clazz.new
     end
   end
 

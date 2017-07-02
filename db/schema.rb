@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170626161135) do
+ActiveRecord::Schema.define(version: 20170702151618) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20170626161135) do
     t.text "best_gene"
     t.decimal "best_log_loss"
     t.integer "max_program_size"
+    t.string "program_type"
   end
 
   create_table "generation_stats", force: :cascade do |t|
