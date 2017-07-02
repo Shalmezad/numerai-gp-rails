@@ -7,7 +7,7 @@ class CreateDemeJob < ApplicationJob
     # Eventually, may want this to fluctuate...
     d.max_size = population_size
     # This should help constrain size...
-    d.max_program_size = 50
+    d.max_program_size = 500
     # Set the type:
     d.program_type = program_type
     # Save

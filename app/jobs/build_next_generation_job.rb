@@ -5,7 +5,7 @@ class BuildNextGenerationJob < ApplicationJob
   WEIGHTED_SELECTION = 1
   TOURNAMENT_SELECTION = 2
   ONE_PLUS_N_SELECTION = 3
-  SELECTION_METHOD = TOURNAMENT_SELECTION #ONE_PLUS_N_SELECTION
+  SELECTION_METHOD = ONE_PLUS_N_SELECTION
 
   def perform(deme_id)
     # Do something later

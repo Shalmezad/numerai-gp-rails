@@ -1,4 +1,5 @@
 require "#{Rails.root}/lib/postfix/postfix"
+require "#{Rails.root}/lib/cgp/cgp"
 
 class Program < ApplicationRecord
   belongs_to :deme
@@ -6,6 +7,8 @@ class Program < ApplicationRecord
 
   #after_initialize :set_programmable
   after_save :save_programmable
+
+  PROGRAM_TYPES = [PostfixProgram.to_s, CgpProgram.to_s]
 
   def initialize(params)
     super(params)

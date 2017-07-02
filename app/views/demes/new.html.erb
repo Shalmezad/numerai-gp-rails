@@ -4,6 +4,10 @@
     <%= f.text_area :max_program_size %>
   </p>
   <p>
+    <%= f.label :program_type %>
+    <%= f.select :program_type, options_for_select(Program::PROGRAM_TYPES) %>
+  </p>
+  <p>
     <%= f.submit %>
   </p>
 <% end %>

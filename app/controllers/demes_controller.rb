@@ -12,7 +12,7 @@ class DemesController < ApplicationController
 
   def create
     # We have our params:
-    CreateDemeJob.perform_later(params[:deme][:max_program_size].to_i)
+    CreateDemeJob.perform_later(params[:deme][:max_program_size].to_i, params[:deme][:program_type])
     redirect_to "/dashboard"
   end
 
