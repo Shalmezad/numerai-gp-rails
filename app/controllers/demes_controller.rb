@@ -15,4 +15,11 @@ class DemesController < ApplicationController
     CreateDemeJob.perform_later(params[:deme][:max_program_size].to_i)
     redirect_to "/dashboard"
   end
+
+  def stop
+    deme_id = params[:id]
+    @deme = Deme.find(deme_id)
+    @deme.stop_run
+    redirect_to "/dashboard"
+  end
 end
