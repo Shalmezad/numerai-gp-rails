@@ -90,8 +90,8 @@ class BuildNextGenerationJob < ApplicationJob
     # ids are already sorted. 
     # Our first one is the best:
     best_gene = Program.find(ids.first).gene
-    ids.each do |i|
-      add_gene_to_next_generation(deme, best_gene)
+    ids.each_with_index do |i, index|
+      add_gene_to_next_generation(deme, best_gene, index!=0)
     end
   end
 
@@ -112,13 +112,13 @@ class BuildNextGenerationJob < ApplicationJob
     return [new_expr_a.join(" "), new_expr_b.join(" ")]
   end
 
-  def add_gene_to_next_generation(deme, gene)
+  def add_gene_to_next_generation(deme, gene, allow_mutate=true)
     p = deme.programs.build
     p.gene = gene
     p.generation = deme.generation + 1
     p.save
     # See if we should mutate
-    if rand() < MUTATION_CHANCE
+    if allow_mutate && rand() < MUTATION_CHANCE
       p.mutate
       p.save
     end
