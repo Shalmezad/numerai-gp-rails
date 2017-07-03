@@ -1,6 +1,6 @@
 class CGP
 
-  NUM_OPERATORS = 8
+  NUM_OPERATORS = 9
 
   attr_accessor :middle_tokens
   attr_accessor :output_sources
@@ -125,22 +125,24 @@ class CGP
       puts "OP: #{op}"
     end
     # To help keep things under control, everything will be kept [0-1]
-    if op == 0
+    if op == 0 # Just left
       result = lhs
-    elsif op == 1
+    elsif op == 1 # Just right
       result = rhs
-    elsif op == 2
+    elsif op == 2 # sqrt( (l + r) / 2 )
       result = Math.sqrt(((lhs + rhs)/2).abs)
-    elsif op == 3
+    elsif op == 3 # sqrt( l - r )
       result = Math.sqrt((lhs-rhs).abs)
-    elsif op == 4
+    elsif op == 4 # l + r
       result = [lhs + rhs,1].min
-    elsif op == 5
+    elsif op == 5 # l - r
       result = (lhs-rhs).abs
-    elsif op == 6
+    elsif op == 6 # 1 - l
       result = (1-lhs).abs
-    elsif op == 7
+    elsif op == 7 # 1 - r
       result = (1-rhs).abs
+    elsif op == 8 # 1 (just 1)
+      result = 1
     else
       raise "Unknown operator #{op}"
     end

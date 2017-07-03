@@ -1,5 +1,6 @@
 require 'resque/server'
 Rails.application.routes.draw do
+  resources :export_files
   resources :generation_stats
   resources :dashboard
   resources :demes do

@@ -1,6 +1,6 @@
 class BuildNextGenerationJob < ApplicationJob
-  queue_as :default
-  MUTATION_CHANCE = 0.2
+  queue_as :bottleneck
+  MUTATION_CHANCE = 0.8
 
   WEIGHTED_SELECTION = 1
   TOURNAMENT_SELECTION = 2

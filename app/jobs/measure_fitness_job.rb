@@ -1,5 +1,5 @@
 class MeasureFitnessJob < ApplicationJob
-  queue_as :default
+  queue_as :fitness
   batchable
 
   def perform(program_id, training_datum_ids)

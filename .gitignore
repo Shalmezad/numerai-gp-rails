@@ -21,3 +21,4 @@
 ext/numerai
 
 db/data
+public/files/*

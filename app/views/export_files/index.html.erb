@@ -1,0 +1,20 @@
+<table class="ui sortable striped celled table">
+  <thead>
+    <tr>
+      <th>File ID</th>
+      <th>File Path</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @export_files.each do |file| %>
+      <tr>
+        <td><%= file.id %></td>
+        <td><%= file.path %></td>
+        <td><%= file.status %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to "Create Deme", new_deme_path, :class => "ui button" %>

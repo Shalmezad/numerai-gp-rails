@@ -1,5 +1,5 @@
 class RunGenerationJob < ApplicationJob
-  queue_as :default
+  queue_as :bottleneck
 
   def perform(deme_id)
     Rails.logger.warn("RunGenerationJob: #{deme_id}")
@@ -15,7 +15,7 @@ class RunGenerationJob < ApplicationJob
     # batch.callback(BuildNextGenerationJob, deme_id)
     batch.callback(AddResourceScoreJob, deme_id)
     # Select the training data to use:
-    num_inputs = 10
+    num_inputs = 20
     training_ids = TrainingDatum.where(:data_type => "train").order("RANDOM()").limit(num_inputs).pluck(:id)
     # Create a job for each of the programs
     program_ids = deme.programs.where(:generation => deme.generation).pluck(:id)

@@ -1,5 +1,5 @@
 class AddResourceScoreJob < ApplicationJob
-  queue_as :default
+  queue_as :bottleneck
 
   def perform(deme_id)
     # We're going to give a total 10% error subtraction for using resources:
