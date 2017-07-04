@@ -3,6 +3,8 @@
     <tr>
       <th>File ID</th>
       <th>File Path</th>
+      <th>Program Type</th>
+      <th>Program</th>
       <th>Status</th>
     </tr>
   </thead>
@@ -10,11 +12,12 @@
     <% @export_files.each do |file| %>
       <tr>
         <td><%= file.id %></td>
-        <td><%= file.path %></td>
+        <td><%= link_to file.path, (file.path || "").gsub("public","") %></td>
+        <td><%= file.program_type %></td>
+        <td><%= file.program %></td>
         <td><%= file.status %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<%= link_to "Create Deme", new_deme_path, :class => "ui button" %>

@@ -23,7 +23,14 @@
         <td><%= !deme.stop %></td>
         <td><%= deme.best_gene %></td>
         <% log_loss = (deme.best_log_loss.to_f rescue 0) %>
-        <td class="<%= log_loss != 0 && log_loss < 0.6931472 ? "positive" : "negative" %>"><%= '%.6f' % log_loss %></td>
+        <td class="<%= log_loss != 0 && log_loss < 0.6931472 ? "positive" : "negative" %>">
+          <% str = '%.6f' % log_loss %>
+          <% params = {:program => deme.best_gene, :program_type => deme.program_type} %>
+          <%= link_to str, 
+            export_files_path(params), 
+            :method => :post, 
+            :class => "ui button" %>
+        </td>
       </tr>
     <% end %>
   </tbody>
