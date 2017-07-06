@@ -1,6 +1,35 @@
 class CGP
+  OPERATIONS = [
+    # Just left
+    lambda{|x,y| x},
+    # Just right
+    lambda{|x,y| y},
+    # sqrt x + y:
+    lambda{|x,y| Math.sqrt(((x + y)/2).abs)},
+    # sqrt x - y:
+    lambda{|x,y| Math.sqrt((x-y).abs)},
+    # l + r:
+    lambda{|x,y| x + y},
+    # l - r:
+    lambda{|x,y| (x - y).abs},
+    # 1 - l
+    lambda{|x,y| (1-x).abs},
+    # 1 - r
+    lambda{|x,y| (1-y).abs},
+    # 1
+    lambda{|x,y| 1},
+    # 0
+    lambda{|x,y| 0},
+    # 0.5
+    lambda{|x,y| 0.5},
+    # x > y
+    lambda{|x,y| x > y ? 1 : 0},
+    # x < y
+    lambda{|x,y| x < y ? 1 : 0}
 
-  NUM_OPERATORS = 9
+  ]
+
+  NUM_OPERATORS = OPERATIONS.size
 
   attr_accessor :middle_tokens
   attr_accessor :output_sources
@@ -125,27 +154,7 @@ class CGP
       puts "OP: #{op}"
     end
     # To help keep things under control, everything will be kept [0-1]
-    if op == 0 # Just left
-      result = lhs
-    elsif op == 1 # Just right
-      result = rhs
-    elsif op == 2 # sqrt( (l + r) / 2 )
-      result = Math.sqrt(((lhs + rhs)/2).abs)
-    elsif op == 3 # sqrt( l - r )
-      result = Math.sqrt((lhs-rhs).abs)
-    elsif op == 4 # l + r
-      result = [lhs + rhs,1].min
-    elsif op == 5 # l - r
-      result = (lhs-rhs).abs
-    elsif op == 6 # 1 - l
-      result = (1-lhs).abs
-    elsif op == 7 # 1 - r
-      result = (1-rhs).abs
-    elsif op == 8 # 1 (just 1)
-      result = 1
-    else
-      raise "Unknown operator #{op}"
-    end
+    result = OPERATIONS[op].call(lhs, rhs)
     if debug
       puts "Result: #{result}"
     end

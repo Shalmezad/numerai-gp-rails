@@ -12,6 +12,14 @@ setup:
 	docker-compose run web rake numerai:load
 	docker-compose run web rake numerai:load_tournament
 
+download:
+	# Get the data
+	docker-compose run web rake numerai:fetch
+	# Load the data
+	docker-compose run web rake numerai:load
+	docker-compose run web rake numerai:load_tournament
+
+
 diagrams:
 	dot -Tpng -o doc/job_diagram.png doc/job_diagram.dot
 
