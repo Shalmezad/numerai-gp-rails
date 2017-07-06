@@ -104,7 +104,7 @@ class CGP
     @middle_tokens = tokens.each_slice(3).to_a
     # Now, ahead of time, we're going to also allocate memory
     # We need a spot for each of our inputs, and middle tokens:
-    @memory = Array.new(@num_inputs + @middle_tokens.size)
+    @memory = {}
     if debug
       puts "Loaded program:"
       puts "  Middle Tokens: "
@@ -116,49 +116,28 @@ class CGP
   end
 
   def evaluate(inputs, debug=false)
-    # Alright, now the fun part.
-    # First, load up our inputs:
-    inputs.each_with_index do |input, index|
-      @memory[index] = input
-    end
-    # Then evaluate each of our middle nodes:
-    @middle_tokens.each_with_index do |node, index|
-      @memory[index + @num_inputs] = evaluate_node(node)
-    end
-    if debug
-      puts "Memory: "
-      puts "  " + @memory.join(" ")
-    end
-
-    # Finally, we'll get our outputs:
-    outputs = @output_sources.map{|x| @memory[x]}
-    # For sanity sake, we're going to limit to [0-1]
-    # Sneaky clamp method:
-    outputs = outputs.map{|o| [0, o, 1].sort[1] }
+    @inputs = inputs
+    outputs = @output_sources.map{|x|evaluate_node(x)}
     return outputs
   end
 
-  def evaluate_node(node, debug=false)
-    # A node is an array of 3 numbers:
-    # First is left side:
-    lhs = @memory[node[0]]
-    # Second is right side:
-    rhs = @memory[node[1]]
-    # Third is operator:
-    op = node[2]
-    # Return based on the operator:
-    result = 0
-    if debug
-      puts "LHS: #{lhs}"
-      puts "RHS: #{rhs}"
-      puts "OP: #{op}"
+  def evaluate_node(node_index, debug=false)
+    # Are we an input node?
+    if node_index < @num_inputs
+      return @inputs[node_index]
     end
-    # To help keep things under control, everything will be kept [0-1]
-    result = OPERATIONS[op].call(lhs, rhs)
-    if debug
-      puts "Result: #{result}"
+    # Do we have a cache?
+    if !@memory[node_index]
+      # Figure out which memory node we need:
+      node = @middle_tokens[node_index - @num_inputs]
+      # Get our left:
+      lhs = evaluate_node(node[0])
+      rhs = evaluate_node(node[1])
+      op = node[2]
+      result = OPERATIONS[op].call(lhs, rhs)
+      @memory[node_index] = [0,result,1].sort[1]
     end
-    return [0, result, 1].sort[1]
+    return @memory[node_index]
   rescue => ex
     puts "Error:"
     puts "LHS: #{lhs}"
