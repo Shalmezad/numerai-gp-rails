@@ -12,7 +12,7 @@ class RunGenerationJob < ApplicationJob
     # So ideally I want something like
     batch = BatChi.batch
     # Build the next generation after we're done measuring:
-    # batch.callback(BuildNextGenerationJob, deme_id)
+    #batch.callback(BuildNextGenerationJob, deme_id)
     batch.callback(AddResourceScoreJob, deme_id)
     # Select the training data to use:
     num_inputs = 40

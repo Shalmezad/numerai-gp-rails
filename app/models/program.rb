@@ -8,7 +8,7 @@ class Program < ApplicationRecord
   #after_initialize :set_programmable
   after_save :save_programmable
 
-  PROGRAM_TYPES = [PostfixProgram.to_s, CgpProgram.to_s, BasicRuleProgram.to_s]
+  PROGRAM_TYPES = [PostfixProgram.to_s, CgpProgram.to_s, BasicRuleProgram.to_s, FixedNumProgram.to_s]
 
   def initialize(params)
     super(params)

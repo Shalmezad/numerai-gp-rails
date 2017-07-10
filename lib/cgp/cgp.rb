@@ -19,13 +19,13 @@ class CGP
     # 1
     lambda{|x,y| 1},
     # 0
-    lambda{|x,y| 0},
+    lambda{|x,y| 0}#,
     # 0.5
-    lambda{|x,y| 0.5},
+    #lambda{|x,y| 0.5},
     # x > y
-    lambda{|x,y| x > y ? 1 : 0},
+    #lambda{|x,y| x > y ? 1 : 0},
     # x < y
-    lambda{|x,y| x < y ? 1 : 0}
+    #lambda{|x,y| x < y ? 1 : 0}
 
   ]
 

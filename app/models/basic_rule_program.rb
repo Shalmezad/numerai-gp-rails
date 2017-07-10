@@ -39,7 +39,7 @@ class BasicRuleProgram < ApplicationRecord
     end
   end
 
-  def randomize(max_tups = 30)
+  def randomize(max_tups = 5)
     # How many tuples to generate?
     num_tups = (rand() * max_tups).to_i
     tups = []
@@ -63,10 +63,11 @@ class BasicRuleProgram < ApplicationRecord
   end
 
   def random_mod
-    return (rand() * 0.1) - 0.05
+    mod_shift = 0.001
+    return (rand() * mod_shift) - (mod_shift/2)
   end
 
-  def mutate(mutate_chance = 0.1)
+  def mutate(mutate_chance = 0.2)
     tups = self.gene.split.each_slice(4).to_a
     tups.each_with_index do |tup, i|
       # Change lhs?
