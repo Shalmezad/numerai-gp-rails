@@ -117,6 +117,7 @@ class CGP
 
   def evaluate(inputs, debug=false)
     @inputs = inputs
+    @memory = {}
     outputs = @output_sources.map{|x|evaluate_node(x)}
     return outputs
   end
