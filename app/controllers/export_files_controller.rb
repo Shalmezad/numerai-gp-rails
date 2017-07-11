@@ -2,7 +2,7 @@ class ExportFilesController < ApplicationController
 
   # GET /export_files
   def index
-    @export_files = ExportFile.all.reverse
+    @export_files = ExportFile.order("id desc")
   end
 
   def create
