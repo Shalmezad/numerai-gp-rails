@@ -22,7 +22,9 @@
         <td><%= link_to deme.generation, [deme, :programs], :class => "ui button" %></td>
         <td><%= deme.max_size %></td>
         <td><%= deme.max_program_size %></td>
-        <td><%= !deme.stop %></td>
+        <td class="<%= deme.stop ? "negative" : "positive" %>">
+          <%= !deme.stop %>
+        </td>
         <td><%= (deme.best_gene || "")[0...100] %></td>
         <% log_loss = (deme.best_log_loss.to_f rescue 0) %>
         <td class="<%= log_loss != 0 && log_loss < 0.6931472 ? "positive" : "negative" %>">
