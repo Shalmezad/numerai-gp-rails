@@ -2,6 +2,12 @@ class Deme < ApplicationRecord
   has_many :programs
   has_many :generation_stats
 
+  SELECTION_METHODS = {
+    :weighted => "Weighted",
+    :tournament => "Tournament",
+    :one_plus_n => "OnePlusN"
+  }
+
   def stop_run
     self.update_attributes :stop => true
   end

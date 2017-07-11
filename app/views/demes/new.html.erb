@@ -12,6 +12,11 @@
     <%= f.select :program_type, options_for_select(Program::PROGRAM_TYPES) %>
   </p>
   <p>
+    <%= f.label :selection_method %>
+    <%= f.select :selection_method , options_for_select(Deme::SELECTION_METHODS.values) %>
+  </p>
+
+  <p>
     <%= f.submit %>
   </p>
 <% end %>

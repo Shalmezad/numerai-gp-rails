@@ -22,11 +22,11 @@ class BuildNextGenerationJob < ApplicationJob
     RunValidationJob.perform_later(best_program.id)
 
     # Do our selection
-    if SELECTION_METHOD == WEIGHTED_SELECTION
+    if deme.selection_method == Deme.SELECTION_METHODS[:weighted]
       perform_weighted_selection(deme, ids)
-    elsif SELECTION_METHOD == TOURNAMENT_SELECTION
+    elsif deme.selection_method == Deme.SELECTION_METHODS[:tournament]
       perform_tournament_selection(deme, ids)
-    elsif SELECTION_METHOD == ONE_PLUS_N_SELECTION 
+    elsif deme.selection_method == Deme.SELECTION_METHODS[:one_plus_n]
       perform_one_plus_n_selection(deme, ids)
     end
     # Destroy the old programs:

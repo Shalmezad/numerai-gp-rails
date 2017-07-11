@@ -6,6 +6,7 @@
     <tr>
       <th>Deme ID</th>
       <th>Deme Type</th>
+      <th>Tournament method</th>
       <th>Generation</th>
       <th>Pool Size</th>
       <th>ProgramSize</th>
@@ -19,6 +20,7 @@
       <tr>
         <td><%= link_to deme.id, deme_path(deme), :class => "ui button" %></td>
         <td><%= deme.program_type %></td>
+        <td><%= deme.selection_method %></td>
         <td><%= link_to deme.generation, [deme, :programs], :class => "ui button" %></td>
         <td><%= deme.max_size %></td>
         <td><%= deme.max_program_size %></td>
