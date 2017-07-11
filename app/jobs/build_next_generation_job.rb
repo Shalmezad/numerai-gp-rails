@@ -22,11 +22,11 @@ class BuildNextGenerationJob < ApplicationJob
     RunValidationJob.perform_later(best_program.id)
 
     # Do our selection
-    if deme.selection_method == Deme.SELECTION_METHODS[:weighted]
+    if deme.selection_method == Deme::SELECTION_METHODS[:weighted]
       perform_weighted_selection(deme, ids)
-    elsif deme.selection_method == Deme.SELECTION_METHODS[:tournament]
+    elsif deme.selection_method == Deme::SELECTION_METHODS[:tournament]
       perform_tournament_selection(deme, ids)
-    elsif deme.selection_method == Deme.SELECTION_METHODS[:one_plus_n]
+    elsif deme.selection_method == Deme::SELECTION_METHODS[:one_plus_n]
       perform_one_plus_n_selection(deme, ids)
     end
     # Destroy the old programs:
@@ -96,6 +96,10 @@ class BuildNextGenerationJob < ApplicationJob
   end
 
   def cross(gene_a, gene_b)
+    # TODO: Put back once we figure a good way to handle this.
+    # CGP and Basic rule aren't necessarily able to cross nicely:
+    return [gene_a, gene_b]
+
     # Get the tokens:
     ta = gene_a.split
     tb = gene_b.split
