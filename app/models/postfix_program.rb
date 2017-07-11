@@ -10,9 +10,9 @@ class PostfixProgram < ApplicationRecord
   end
 
   # Replaces gene with a completely random generated gene
-  def randomize
+  def randomize(max_tokens = 20)
     tokens = []
-    num_tokens = (rand() * 20).to_i
+    num_tokens = (rand() * max_tokens).to_i
     num_tokens.times do
       token = random_token
       tokens << token

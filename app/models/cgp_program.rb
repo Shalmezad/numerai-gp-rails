@@ -8,8 +8,8 @@ class CgpProgram < ApplicationRecord
     return nil
   end
 
-  def randomize
-    self.gene = CGP.random_program(TrainingDatum::NUM_FEATURES,1,50)
+  def randomize(max_program_size=50)
+    self.gene = CGP.random_program(TrainingDatum::NUM_FEATURES,1,max_program_size)
   end
 
   def mutate

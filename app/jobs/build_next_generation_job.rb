@@ -123,17 +123,17 @@ class BuildNextGenerationJob < ApplicationJob
       p.save
     end
     # See if we need to crop:
-    if !deme.max_program_size.nil?
-      p.reload
-      tokens = p.gene.split
-      if tokens.size > deme.max_program_size
-        while tokens.size > deme.max_program_size
-          tokens.delete_at(rand(tokens.length))
-        end
-        p.gene = tokens.join(" ")
-        p.save
-      end
-    end
+    #if !deme.max_program_size.nil?
+    #  p.reload
+    #  tokens = p.gene.split
+    #  if tokens.size > deme.max_program_size
+    #    while tokens.size > deme.max_program_size
+    #      tokens.delete_at(rand(tokens.length))
+    #    end
+    #    p.gene = tokens.join(" ")
+    #    p.save
+    #  end
+    #end
   end
 
   def pick_id(ids)

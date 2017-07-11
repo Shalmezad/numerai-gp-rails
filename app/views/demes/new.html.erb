@@ -1,7 +1,11 @@
 <%= form_for :deme, url: demes_path do |f| %>
   <p>
-    <%= f.label :max_size %>
+    <%= f.label "Max pool size" %>
     <%= f.text_area :max_size %>
+  </p>
+  <p>
+    <%= f.label :max_program_size %>
+    <%= f.text_area :max_program_size %>
   </p>
   <p>
     <%= f.label :program_type %>

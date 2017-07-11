@@ -13,7 +13,7 @@ class FixedNumProgram < ApplicationRecord
     # Don't do anything
   end
 
-  def randomize
+  def randomize(max_program_size = 0)
     # poof
   end
 

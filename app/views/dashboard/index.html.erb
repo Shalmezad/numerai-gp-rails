@@ -7,7 +7,8 @@
       <th>Deme ID</th>
       <th>Deme Type</th>
       <th>Generation</th>
-      <th>Size</th>
+      <th>Pool Size</th>
+      <th>ProgramSize</th>
       <th>Running</th>
       <th>Best Gene</th>
       <th>Best LogLoss</th>
@@ -20,6 +21,7 @@
         <td><%= deme.program_type %></td>
         <td><%= link_to deme.generation, [deme, :programs], :class => "ui button" %></td>
         <td><%= deme.max_size %></td>
+        <td><%= deme.max_program_size %></td>
         <td><%= !deme.stop %></td>
         <td><%= (deme.best_gene || "")[0...100] %></td>
         <% log_loss = (deme.best_log_loss.to_f rescue 0) %>

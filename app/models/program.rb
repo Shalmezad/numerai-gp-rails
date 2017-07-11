@@ -26,8 +26,8 @@ class Program < ApplicationRecord
     self.programmable.save
   end
 
-  def randomize
-    self.programmable.randomize
+  def randomize(max_size = 20)
+    self.programmable.randomize(max_size)
   end
 
   def output(inputs)

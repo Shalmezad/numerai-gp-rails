@@ -5,13 +5,13 @@ class CreateDemeJob < ApplicationJob
   def perform(opts={})
     d = Deme.new(opts)
     # This should help constrain size...
-    d.max_program_size = 500
+    #d.max_program_size = 500
     # Save
     d.save!
     # Build our population
     d.max_size.times do 
       p = d.programs.build
-      p.randomize
+      p.randomize(d.max_program_size)
       p.generation = d.generation
       p.save
     end
