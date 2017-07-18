@@ -22,3 +22,4 @@ ext/numerai
 
 db/data
 public/files/*
+ext/

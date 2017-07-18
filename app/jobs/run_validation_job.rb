@@ -1,3 +1,4 @@
+require "#{Rails.root}/lib/math/math"
 class RunValidationJob < ApplicationJob
   queue_as :validation
 
@@ -27,7 +28,7 @@ class RunValidationJob < ApplicationJob
         end
         # Going to normalize the actual output for easy of use:
         actual_output = (Math.tanh(actual_output)+1)/2
-        loss = logLoss(expected_output, actual_output)
+        loss = Math.logLoss(actual_output, expected_output)
         logLosses << loss
       end
       break if dead
@@ -54,13 +55,6 @@ class RunValidationJob < ApplicationJob
     end
   end
 
-  def logLoss(act, pred, eps=1e-15)
-    pred = [eps, pred].max
-    pred = [1-eps, pred].min
-    ll = act * Math.log(pred) + (1-act) * Math.log(1-pred)
-    ll = ll * -1
-    return ll
-  end
 
 
 end
