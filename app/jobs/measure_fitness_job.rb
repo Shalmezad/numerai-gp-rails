@@ -2,6 +2,8 @@ require "#{Rails.root}/lib/math/math"
 class MeasureFitnessJob < ApplicationJob
   queue_as :fitness
   batchable
+  # If we need to profile this:
+  #profable
 
   def perform(program_id, training_datum_ids)
     # We have a program id, and an array of training data ids
