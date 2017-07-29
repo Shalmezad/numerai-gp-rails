@@ -11,7 +11,7 @@
     <% @programs.each do |p| %>
       <tr>
         <td><%= p.deme_id %></td>
-        <td><%= p.gene%></td>
+        <td><%= (p.gene || "")[0...100] %></td>
         <td><%= '%.4f' % (p.log_loss.to_f rescue 0) %></td>
         <td><%= '%.4f' % (p.resource_bonus.to_f rescue 0) %></td>
       </tr>

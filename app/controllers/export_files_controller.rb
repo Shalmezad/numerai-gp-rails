@@ -6,7 +6,7 @@ class ExportFilesController < ApplicationController
   end
 
   def create
-    p = params.permit(:program, :program_type)
+    p = params[:export_file].permit(:program, :program_type)
     @export_file = ExportFile.create(p)
     # Always start as queued:
     @export_file.status = ExportFile::STATUS[:queued]

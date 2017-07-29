@@ -20,7 +20,7 @@
           <%= gs.generation %>
         </td>
         <td>
-          <%= gs.best_gene %>
+          <%= (gs.best_gene || "")[0...100] %>
         </td>
         <td>
           <%= '%.4f' % (gs.min.to_f rescue 0) %>

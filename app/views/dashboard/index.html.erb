@@ -31,11 +31,11 @@
         <% log_loss = (deme.best_log_loss.to_f rescue 0) %>
         <td class="<%= log_loss != 0 && log_loss < 0.6931472 ? "positive" : "negative" %>">
           <% str = '%.6f' % log_loss %>
-          <% params = {:program => deme.best_gene, :program_type => deme.program_type} %>
-          <%= link_to str, 
-            export_files_path(params), 
-            :method => :post, 
-            :class => "ui button" %>
+          <%= form_for :export_file, url: export_files_path do |f| %>
+            <%= f.hidden_field :program, :value => deme.best_gene %>
+            <%= f.hidden_field :program_type, :value => deme.program_type %>
+            <%= f.submit str %>
+          <% end %>
         </td>
       </tr>
     <% end %>

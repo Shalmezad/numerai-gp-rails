@@ -29,4 +29,6 @@ cleanup:
 	# Remove just the web ones:
 	docker ps -a | grep "numerai_web" | awk '{print $$1}' | xargs docker rm
 work:
-	docker-compose scale worker=3
+	rm tmp/pids/server.pid || echo "No file to remove"
+	docker-compose scale db=1 redis=1 worker=0 worker_validation=2 web=1
+

@@ -16,6 +16,7 @@ services:
     depends_on:
       - db
       - redis
+    mem_limit: 750m
   worker_validation:
     image: numerai_web
     command: rake resque:work QUEUE=validation,*
@@ -26,6 +27,7 @@ services:
     depends_on:
       - db
       - redis
+    mem_limit: 750m
   web:
     build: .
     image: numerai_web
@@ -39,3 +41,4 @@ services:
     depends_on:
       - db
       - redis
+    mem_limit: 250m

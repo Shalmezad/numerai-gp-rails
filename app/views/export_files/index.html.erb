@@ -14,7 +14,7 @@
         <td><%= file.id %></td>
         <td><%= link_to file.path, (file.path || "").gsub("public","") %></td>
         <td><%= file.program_type %></td>
-        <td><%= file.program %></td>
+        <td><%= (file.program || "")[0...100] %></td>
         <td><%= file.status %></td>
       </tr>
     <% end %>
